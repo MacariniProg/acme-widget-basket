@@ -16,31 +16,31 @@ Component names follow [ui.shadcn.com](https://ui.shadcn.com/docs/components) (c
 
 shadcn CSS variables, set in `apps/web/src/index.css`.
 
-| Token | Value |
-|---|---|
-| `--background` | `#F3F5F7` |
-| `--foreground` | `#1B2338` |
-| `--card` | `#FFFFFF` |
-| `--primary` | `#1B2338` |
+| Token                  | Value     |
+| ---------------------- | --------- |
+| `--background`         | `#F3F5F7` |
+| `--foreground`         | `#1B2338` |
+| `--card`               | `#FFFFFF` |
+| `--primary`            | `#1B2338` |
 | `--primary-foreground` | `#FFFFFF` |
-| `--secondary` | `#E6E9EE` |
-| `--muted` | `#E6E9EE` |
-| `--muted-foreground` | `#596173` |
+| `--secondary`          | `#E6E9EE` |
+| `--muted`              | `#E6E9EE` |
+| `--muted-foreground`   | `#596173` |
 | `--border` / `--input` | `#D5DAE1` |
-| `--ring` | `#2D6CD3` |
-| `--destructive` | `#B42318` |
-| `--radius` | `0.5rem` |
+| `--ring`               | `#2D6CD3` |
+| `--destructive`        | `#B42318` |
+| `--radius`             | `0.5rem`  |
 
 Extra tokens for product swatches only (not in shadcn):
 
-| Token | Value |
-|---|---|
+| Token          | Value     |
+| -------------- | --------- |
 | `--widget-r01` | `#D63A3A` |
 | `--widget-g01` | `#2E9A5C` |
 | `--widget-b01` | `#2D6CD3` |
 
 The swatch token is picked by product code. A product without a token gets `--muted`.
-Light theme only. *(shortcut: no dark mode, add the `.dark` token set if asked)*
+Light theme only. _(shortcut: no dark mode, add the `.dark` token set if asked)_
 
 ### Type
 
@@ -57,19 +57,19 @@ Light theme only. *(shortcut: no dark mode, add the `.dark` token set if asked)*
 
 ## Components
 
-| Where | shadcn component |
-|---|---|
-| Product list | `ItemGroup`, `Item` (outline), `ItemSeparator` |
-| Product parts | `ItemMedia`, `ItemContent`, `ItemTitle`, `ItemDescription`, `ItemActions` |
-| Offer and quantity tags | `Badge` (secondary) |
-| Add button | `Button` (outline) + `Spinner` |
-| Basket | `Card`, `CardHeader`, `CardTitle`, `CardAction`, `CardContent`, `CardFooter` |
-| Empty basket button | `Button` (ghost, sm) |
-| Receipt lines | `Separator` |
-| Empty state | `Empty`, `EmptyHeader`, `EmptyTitle`, `EmptyDescription` |
-| Loading | `Skeleton` |
-| Load error | `Alert` (destructive), `AlertTitle`, `AlertDescription` |
-| Add error | `Toast` (`Toaster`, `toast.add` with `type: "error"`) |
+| Where                   | shadcn component                                                             |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| Product list            | `ItemGroup`, `Item` (outline), `ItemSeparator`                               |
+| Product parts           | `ItemMedia`, `ItemContent`, `ItemTitle`, `ItemDescription`, `ItemActions`    |
+| Offer and quantity tags | `Badge` (secondary)                                                          |
+| Add button              | `Button` (outline) + `Spinner`                                               |
+| Basket                  | `Card`, `CardHeader`, `CardTitle`, `CardAction`, `CardContent`, `CardFooter` |
+| Empty basket button     | `Button` (ghost, sm)                                                         |
+| Receipt lines           | `Separator`                                                                  |
+| Empty state             | `Empty`, `EmptyHeader`, `EmptyTitle`, `EmptyDescription`                     |
+| Loading                 | `Skeleton`                                                                   |
+| Load error              | `Alert` (destructive), `AlertTitle`, `AlertDescription`                      |
+| Add error               | `Toast` (`Toaster`, `toast.add` with `type: "error"`)                        |
 
 Install: `pnpm dlx shadcn@latest add item badge button spinner card separator empty skeleton alert toast`
 
@@ -90,7 +90,7 @@ Basket: R01, R01. Shows BR-04, BR-05, BR-06, BR-07.
 | +-------------------------------------+ | 2 x Red Widget         $65.90 |
 | | [##]  R01          $32.95           | | ----------------------------- |
 | | red   Red Widget                    | | Subtotal               $65.90 |
-| |       (Second one half price)       | | Offer discount        -$16.48 |
+| |       (Second one half price)       | | Red Widget offer      -$16.48 |
 | |       (2 in basket) [Add to basket] | | Delivery                $4.95 |
 | +-------------------------------------+ | ----------------------------- |
 | | [##]  G01          $24.95           | | Total                         |
@@ -104,7 +104,7 @@ Basket: R01, R01. Shows BR-04, BR-05, BR-06, BR-07.
 - Product row: `ItemMedia` is a square swatch in the widget colour. `ItemTitle` is the code with the price right-aligned on the same line, `ItemDescription` the name. The Button sits in `ItemActions`.
 - `Badge` "Second one half price" on products that have an offer (BR-04).
 - `Badge` "2 in basket" once the product is in the basket, so adding gives feedback next to the button that was pressed.
-- Receipt: one line per product with quantity and line amount at catalogue price, then subtotal, offer discount (only when above 0), delivery, total (BR-07).
+- Receipt: one line per product with quantity and line amount at catalogue price, then subtotal, one line per entry in `discounts` with its label, delivery, total (BR-07).
 - Delivery hint in `CardFooter`, `text-muted-foreground`. Only when a cheaper tier exists (BR-06). Next tier with a cost: "Spend $0.58 more to pay $2.95 for delivery." Next tier free: "Spend $32.10 more for free delivery."
 - The total area has `aria-live="polite"`, so screen readers hear the new total after each add.
 - Each Button has a visible label "Add to basket" and `aria-label="Add Red Widget to basket"`.
@@ -128,7 +128,7 @@ Basket: B01, G01. Shows BR-06, BR-07.
 | $2.95 for delivery.           |
 ```
 
-No offer discount line when the discount is 0.
+No offer line when `discounts` is empty.
 
 ### S3. Free delivery
 
@@ -141,7 +141,7 @@ Basket: B01, B01, R01, R01, R01. Shows BR-04 (3 reds give 1 discount), BR-06.
 | 2 x Blue Widget        $15.90 |
 | ----------------------------- |
 | Subtotal              $114.75 |
-| Offer discount        -$16.48 |
+| Red Widget offer      -$16.48 |
 | Delivery                 Free |
 | ----------------------------- |
 | Total                 $98.27  |
@@ -239,31 +239,27 @@ The Button moves under the name and takes the full row width, so the touch targe
 
 All amounts are integer cents (BR-02). The UI formats them with `Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })`.
 
-```ts
-type ProductView = {
-  code: string;          // "R01"
-  name: string;          // "Red Widget"
-  price: number;         // 3295
-  offer: string | null;  // "Second one half price", badge text (S1)
-};
+The types live in `packages/core/src/index.ts` (`ProductView`, `BasketView`, `DiscountView`). In short:
 
+```ts
+type ProductView = { code; name; price; offer: string | null }; // offer = badge text (S1)
 type BasketView = {
-  id: string;            // uuid, saved in localStorage
-  items: { code: string; name: string; quantity: number; lineTotal: number }[];
-  subtotal: number;
-  discount: number;      // 0 hides the offer line (S2)
-  delivery: number;      // 0 shows "Free" (S3)
-  total: number;
-  nextDelivery: { spend: number; cost: number } | null; // hint line (S1, S2), null when already free
+	id; // uuid, saved in localStorage
+	items: { code; name; quantity; lineTotal }[];
+	subtotal;
+	discounts: { label; amount }[]; // one receipt line per offer, empty hides it (S2)
+	delivery; // 0 shows "Free" (S3)
+	total;
+	nextDelivery: { spend; cost } | null; // hint line (S1, S2), null when already free
 };
 ```
 
-| Screen need | Endpoint |
-|---|---|
-| Catalogue (S1, S5) | `GET /products` → `ProductView[]` |
-| New or emptied basket (S4) | `POST /baskets` → `BasketView` |
-| Saved basket on reload | `GET /baskets/:id` → `BasketView` (404 → new basket) |
-| Add (S6, S7) | `POST /baskets/:id/items` `{ code }` → `BasketView` |
+| Screen need                | Endpoint                                             |
+| -------------------------- | ---------------------------------------------------- |
+| Catalogue (S1, S5)         | `GET /products` → `ProductView[]`                    |
+| New or emptied basket (S4) | `POST /baskets` → `BasketView`                       |
+| Saved basket on reload     | `GET /baskets/:id` → `BasketView` (404 → new basket) |
+| Add (S6, S7)               | `POST /baskets/:id/items` `{ code }` → `BasketView`  |
 
 ### Discounts and offers come from the API
 
@@ -271,7 +267,7 @@ type BasketView = {
 - Offers are data (an `offers` table, see the plan), and the badge text comes from `ProductView.offer`. Changing or switching off an offer of an existing kind is a data change, with no front-end change.
 - A new kind of offer (e.g. "3 for 2") is still a new function in `packages/core`. The front-end doesn't change.
 - Admin screens to manage offers are out of scope.
-- Open, decide in Stage 3: `discount` is one number shown as "Offer discount". If several offers can apply at once, return `discounts: { label: string; amount: number }[]` instead, so the receipt shows one line per offer with its name.
+- Each applied offer is its own entry in `discounts`, with the label the receipt shows. Several offers at once need no front-end change. _(decided in Stage 3)_
 
 ### Delivery hint
 
@@ -279,9 +275,9 @@ type BasketView = {
 
 Checks for the four brief examples:
 
-| Basket | subtotal | discount | delivery | total | nextDelivery |
-|---|---|---|---|---|---|
-| B01, G01 | 3290 | 0 | 495 | 3785 | 1710 → 295 |
-| R01, R01 | 6590 | 1648 | 495 | 5437 | 58 → 295 |
-| R01, G01 | 5790 | 0 | 295 | 6085 | 3210 → 0 |
-| B01, B01, R01, R01, R01 | 11475 | 1648 | 0 | 9827 | null |
+| Basket                  | subtotal | discounts | delivery | total | nextDelivery |
+| ----------------------- | -------- | --------- | -------- | ----- | ------------ |
+| B01, G01                | 3290     | none      | 495      | 3785  | 1710 → 295   |
+| R01, R01                | 6590     | 1648      | 495      | 5437  | 58 → 295     |
+| R01, G01                | 5790     | none      | 295      | 6085  | 3210 → 0     |
+| B01, B01, R01, R01, R01 | 11475    | 1648      | 0        | 9827  | null         |

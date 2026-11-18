@@ -10,15 +10,11 @@ Back-end in Node/TypeScript (NestJS), a small UI in React/TypeScript.
 
 ## Current state
 
-No code yet. Current stage: **Stage 3, project structure**. Done: business rules (`docs/business-rules.md`) and screens (`docs/design/screens.md`).
+Current stage: **Stage 3, project structure**. Done: business rules (`docs/business-rules.md`) and screens (`docs/design/screens.md`).
 The stage roadmap is in `docs/planning/roteiro-etapas.md`. Update this line when a stage closes.
 
-Planned layout (created in Stage 3, does not exist yet):
-
-- `apps/web`: front-end (Vite, React, Tailwind, shadcn/ui)
-- `apps/api`: back-end (NestJS, Zod, Drizzle, Postgres)
-- `packages/core`: pure basket logic, no dependencies, used by both
-- `docs/`: business rules, screens, architecture, decisions
+Commands, requirements and folder layout: see `README.md`. It is the single source; don't repeat them here.
+`apps/web` is created in Stage 4 and `apps/api` in Stage 5.
 
 ## Rules that never change
 
@@ -32,6 +28,7 @@ Full list with ids and sources: `docs/business-rules.md`. The ones agents get wr
 - An unknown product code is an error, never silently ignored.
 - The client only sends product codes. Prices, discounts, delivery and totals are computed on the server, never read from a request.
 - Everything committed (code, docs, commits, README) is in English.
+- A change that adds or changes a command or a top-level folder updates `README.md` in the same commit.
 
 ## Docs
 
