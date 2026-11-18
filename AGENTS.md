@@ -10,11 +10,11 @@ Back-end in Node/TypeScript (NestJS), a small UI in React/TypeScript.
 
 ## Current state
 
-Current stage: **Stage 3, project structure**. Done: business rules (`docs/business-rules.md`) and screens (`docs/design/screens.md`).
+Current stage: **Stage 5, back-end** (`apps/api`). Done: business rules (`docs/business-rules.md`), screens (`docs/design/screens.md`), project structure, and the front-end (`apps/web`, running against an MSW mock of the API).
 The stage roadmap is in `docs/planning/roteiro-etapas.md`. Update this line when a stage closes.
 
 Commands, requirements and folder layout: see `README.md`. It is the single source; don't repeat them here.
-`apps/web` is created in Stage 4 and `apps/api` in Stage 5.
+`apps/api` is created in Stage 5. Its endpoints must match the contract in `docs/design/screens.md` and the MSW handlers in `apps/web/src/mocks/handlers.ts`.
 
 ## Rules that never change
 

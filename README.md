@@ -19,20 +19,26 @@ pnpm lint && pnpm typecheck && pnpm test
 
 ## Commands
 
-| Command          | What it does                     |
-| ---------------- | -------------------------------- |
-| `pnpm dev`       | Starts the web app (Vite)        |
-| `pnpm build`     | Builds every package             |
-| `pnpm lint`      | Biome lint and format check      |
-| `pnpm format`    | Biome fixes and formats in place |
-| `pnpm typecheck` | `tsc` in every package           |
-| `pnpm test`      | Vitest in every package          |
+| Command          | What it does                                    |
+| ---------------- | ----------------------------------------------- |
+| `pnpm dev`       | Starts the web app (Vite) with a mock API       |
+| `pnpm build`     | Builds every package                            |
+| `pnpm lint`      | Biome lint and format check                     |
+| `pnpm format`    | Biome fixes and formats in place                |
+| `pnpm typecheck` | `tsc` in every package                          |
+| `pnpm test`      | Vitest: core unit tests and web component tests |
+
+## Running the UI without the API
+
+`pnpm dev` serves the UI at http://localhost:5173 with [MSW](https://mswjs.io) answering the API in the browser (`apps/web/src/mocks/handlers.ts`). The mock runs the real `Basket` from `packages/core`, so totals are correct; baskets live in memory and reset on reload.
+
+To use a real API, set `VITE_API_URL` (see `apps/web/.env.example`). The mock only runs in development and only when that variable is unset. The component tests use the same handlers.
 
 ## Project structure
 
 ```
 packages/core   the Basket (business rules) and the API contract types, no dependencies
-apps/web        React UI (Vite, Tailwind, shadcn/ui)
+apps/web        React UI (Vite, Tailwind, shadcn/ui, TanStack Query)
 apps/api        NestJS API (Stage 5, not created yet)
 docs/           business rules, screens
 ```
