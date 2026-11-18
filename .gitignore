@@ -1,0 +1,12 @@
+# Local planning notes (Portuguese) and the original test brief
+docs/planning/
+docs/test/
+
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+.DS_Store
