@@ -69,9 +69,11 @@ Light theme only. _(shortcut: no dark mode, add the `.dark` token set if asked)_
 | Empty state             | `Empty`, `EmptyHeader`, `EmptyTitle`, `EmptyDescription`                     |
 | Loading                 | `Skeleton`                                                                   |
 | Load error              | `Alert` (destructive), `AlertTitle`, `AlertDescription`                      |
-| Add error               | `Toast` (`Toaster`, `toast.add` with `type: "error"`)                        |
+| Add error               | `Sonner` (`Toaster` from `@/components/ui/sonner`, `toast.error`)            |
 
-Install: `pnpm dlx shadcn@latest add item badge button spinner card separator empty skeleton alert toast`
+Install: `pnpm dlx shadcn@latest add item badge button spinner card separator empty skeleton alert sonner`
+
+The shadcn `Toast` component only exists for Base UI projects. This project uses Radix, so errors use `Sonner`. Render it as `<Toaster theme="light" />`: the generated wrapper reads the theme from `next-themes`, and without a provider it would follow the OS dark mode.
 
 ## States
 
@@ -193,7 +195,7 @@ While `POST /baskets/:id/items` runs.
 
 The request fails (network or 5xx).
 
-- `toast.add({ type: "error", title: "Red Widget wasn't added", description: "The server didn't respond. Try again." })`
+- `toast.error("Red Widget wasn't added", { description: "The server didn't respond. Try again." })`
 - The basket doesn't change.
 
 ### S8. Page failed to load
