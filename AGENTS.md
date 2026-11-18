@@ -10,7 +10,7 @@ Back-end in Node/TypeScript (NestJS), a small UI in React/TypeScript.
 
 ## Current state
 
-Current stage: **Stage 6, finishing** (README, final review). Done: business rules (`docs/business-rules.md`), screens (`docs/design/screens.md`), project structure, the front-end (`apps/web`) and the back-end (`apps/api`, NestJS on Postgres).
+Current stage: **all stages done**. Done: business rules (`docs/business-rules.md`), screens (`docs/design/screens.md`), project structure, the front-end (`apps/web`), the back-end (`apps/api`, NestJS on Postgres) and the README.
 The stage roadmap is in `docs/planning/roteiro-etapas.md`. Update this line when a stage closes.
 
 Commands, requirements and folder layout: see `README.md`. It is the single source; don't repeat them here.
