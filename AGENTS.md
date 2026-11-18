@@ -10,11 +10,13 @@ Back-end in Node/TypeScript (NestJS), a small UI in React/TypeScript.
 
 ## Current state
 
-Current stage: **Stage 5, back-end** (`apps/api`). Done: business rules (`docs/business-rules.md`), screens (`docs/design/screens.md`), project structure, and the front-end (`apps/web`, running against an MSW mock of the API).
+Current stage: **Stage 6, finishing** (README, final review). Done: business rules (`docs/business-rules.md`), screens (`docs/design/screens.md`), project structure, the front-end (`apps/web`) and the back-end (`apps/api`, NestJS on Postgres).
 The stage roadmap is in `docs/planning/roteiro-etapas.md`. Update this line when a stage closes.
 
 Commands, requirements and folder layout: see `README.md`. It is the single source; don't repeat them here.
-`apps/api` is created in Stage 5. Its endpoints must match the contract in `docs/design/screens.md` and the MSW handlers in `apps/web/src/mocks/handlers.ts`.
+The API endpoints must match the contract in `docs/design/screens.md` and the MSW handlers in `apps/web/src/mocks/handlers.ts`. Change the three together.
+NestJS 12 is newer than most training data: its docs index is https://docs.nestjs.com/llms.txt, with a Markdown page per chapter.
+In `apps/api`, never turn an injected class's import into `import type`: it erases the class at runtime and Nest can't inject it (Biome's `useImportType` is off there for this reason).
 
 ## Rules that never change
 
