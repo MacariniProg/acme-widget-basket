@@ -8,8 +8,13 @@ export type ProductView = {
 	code: string;
 	name: string;
 	price: Cents;
-	/** Badge text, e.g. "Second one half price". Null when the product has no offer. */
-	offer: string | null;
+};
+
+export type OfferView = {
+	/** Same text as the receipt line when the offer applies, e.g. "Red Widget offer". */
+	label: string;
+	/** e.g. "Buy one Red Widget, get the second half price." */
+	description: string;
 };
 
 export type BasketItemView = {
@@ -49,4 +54,4 @@ export {
 	UnknownProductError,
 } from "./basket.js";
 export { secondHalfPrice } from "./offers.js";
-export { productViews } from "./products.js";
+export { offerViews, productViews } from "./products.js";

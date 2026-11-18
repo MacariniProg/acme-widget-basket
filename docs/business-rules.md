@@ -78,7 +78,7 @@ One currency (USD). No tax.
 
 - Required by the brief: `add(code)` and `total()`. _(brief)_
 - The UI can empty the basket by starting a new one. _(assumption: a UI convenience, not in the brief)_
-- Removing a single item is out of scope for now. _(assumption)_
+- `remove(code)` takes one unit of that product out, and offers and delivery are recomputed. Removing a product the basket doesn't have changes nothing; an unknown code is still an error (BR-03). _(assumption: added for the quantity controls in the UI, not in the brief)_
 
 ## Worked examples _(brief)_
 

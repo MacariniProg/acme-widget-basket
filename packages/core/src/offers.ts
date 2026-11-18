@@ -4,15 +4,15 @@ import type { Offer } from "./basket.js";
 export function secondHalfPrice({
 	code,
 	label,
-	badge,
+	description,
 }: {
 	code: string;
 	label: string;
-	badge: string;
+	description: string;
 }): Offer {
 	return {
 		label,
-		badge: { code, text: badge },
+		description,
 		discount: (items) => {
 			const matches = items.filter((item) => item.code === code);
 			const pairs = Math.floor(matches.length / 2);

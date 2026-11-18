@@ -8,8 +8,8 @@ export type DeliveryTier = { below?: Cents; cost: Cents };
 export type Offer = {
 	/** Receipt line text, e.g. "Red Widget offer". */
 	label: string;
-	/** Product tag in the catalogue, e.g. "Second one half price" on R01. */
-	badge?: { code: string; text: string };
+	/** What the customer reads, e.g. "Buy one Red Widget, get the second half price." */
+	description: string;
 	discount: (items: readonly Product[]) => Cents;
 };
 
@@ -52,6 +52,13 @@ export class Basket {
 		const product = this.#catalogue.get(code);
 		if (!product) throw new UnknownProductError(code);
 		this.#items.push(product);
+	}
+
+	/** Takes one unit of the product out. A product the basket doesn't have changes nothing (BR-10). */
+	remove(code: string): void {
+		if (!this.#catalogue.has(code)) throw new UnknownProductError(code);
+		const index = this.#items.findLastIndex((item) => item.code === code);
+		if (index !== -1) this.#items.splice(index, 1);
 	}
 
 	total(): Cents {

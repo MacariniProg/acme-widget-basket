@@ -97,3 +97,30 @@ describe("nextDelivery", () => {
 		expect(basketWith([]).summary().nextDelivery).toBeNull();
 	});
 });
+
+describe("remove", () => {
+	test("takes one unit of that product out of the basket (BR-10)", () => {
+		const basket = basketWith(["R01", "R01", "G01"]);
+		basket.remove("R01");
+		expect(basket.summary().items).toEqual([
+			{ code: "R01", name: "Red Widget", quantity: 1, lineTotal: 3295 },
+			{ code: "G01", name: "Green Widget", quantity: 1, lineTotal: 2495 },
+		]);
+	});
+
+	test("recomputes the offer: back to one red, no discount", () => {
+		const basket = basketWith(["R01", "R01"]);
+		basket.remove("R01");
+		expect(basket.total()).toBe(3295 + 495);
+	});
+
+	test("changes nothing when the product isn't in the basket (BR-10)", () => {
+		const basket = basketWith(["G01"]);
+		basket.remove("R01");
+		expect(basket.total()).toBe(2495 + 495);
+	});
+
+	test("rejects an unknown product code (BR-03)", () => {
+		expect(() => basketWith([]).remove("NOPE")).toThrow(UnknownProductError);
+	});
+});

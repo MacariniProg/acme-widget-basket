@@ -21,7 +21,7 @@ export const acmeConfig: BasketConfig = {
 		secondHalfPrice({
 			code: red.code,
 			label: "Red Widget offer",
-			badge: "Second one half price",
+			description: "Buy one Red Widget, get the second half price.",
 		}),
 	],
 };

@@ -1,16 +1,20 @@
 import { expect, test } from "vitest";
 import { acmeConfig } from "./acme.js";
-import { productViews } from "./products.js";
+import { offerViews, productViews } from "./products.js";
 
-test("lists the catalogue with the offer badge on products that have one", () => {
+test("lists the catalogue", () => {
 	expect(productViews(acmeConfig)).toEqual([
+		{ code: "R01", name: "Red Widget", price: 3295 },
+		{ code: "G01", name: "Green Widget", price: 2495 },
+		{ code: "B01", name: "Blue Widget", price: 795 },
+	]);
+});
+
+test("lists the offers with the text customers see", () => {
+	expect(offerViews(acmeConfig)).toEqual([
 		{
-			code: "R01",
-			name: "Red Widget",
-			price: 3295,
-			offer: "Second one half price",
+			label: "Red Widget offer",
+			description: "Buy one Red Widget, get the second half price.",
 		},
-		{ code: "G01", name: "Green Widget", price: 2495, offer: null },
-		{ code: "B01", name: "Blue Widget", price: 795, offer: null },
 	]);
 });
