@@ -11,8 +11,6 @@
 @theme inline {
 	--font-heading: var(--font-sans);
 	--font-sans: "IBM Plex Sans Variable", sans-serif;
-	--text-code: 1.75rem;
-	--text-code--line-height: 1.2;
 	--text-total: 2.5rem;
 	--text-total--line-height: 1.1;
 	--color-highlight: var(--highlight);

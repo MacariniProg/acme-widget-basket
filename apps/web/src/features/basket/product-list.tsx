@@ -6,11 +6,8 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group";
 import {
 	Item,
-	ItemActions,
-	ItemContent,
 	ItemDescription,
 	ItemGroup,
-	ItemMedia,
 	ItemTitle,
 } from "@/components/ui/item";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -92,33 +89,31 @@ function ProductRow({
 	}
 
 	return (
-		<Item variant="outline" role="listitem" className="bg-card p-4">
-			<ItemMedia>
-				<span
-					aria-hidden="true"
-					className="block size-12 rounded-md"
-					style={{
-						background: `var(--widget-${product.code.toLowerCase()}, var(--muted))`,
-					}}
-				/>
-			</ItemMedia>
-			<ItemContent className="min-w-40">
-				<ItemTitle>
-					<span className="text-code font-semibold">{product.code}</span>
-				</ItemTitle>
-				<ItemDescription className="text-base text-foreground">
-					{product.name}
-				</ItemDescription>
-			</ItemContent>
-			<ItemActions className="flex-col items-end justify-between self-stretch max-sm:basis-full max-sm:flex-row max-sm:items-center">
-				<span className="text-base font-medium tabular-nums">
-					{formatCents(product.price)}
-				</span>
+		// Two rows on a grid, like a receipt line: name and price share the first row, code and controls the second.
+		<Item
+			variant="outline"
+			role="listitem"
+			className="grid grid-cols-[auto_minmax(0,1fr)_auto] grid-rows-[auto_auto] gap-x-3 gap-y-1.5 bg-card p-4 sm:gap-x-4 sm:px-5"
+		>
+			<span
+				aria-hidden="true"
+				className="row-span-2 block size-12 self-center rounded-md sm:size-14"
+				style={{
+					background: `var(--widget-${product.code.toLowerCase()}, var(--muted))`,
+				}}
+			/>
+			<ItemTitle className="line-clamp-none self-end text-xl leading-tight font-semibold">
+				{product.name}
+			</ItemTitle>
+			<span className="self-end justify-self-end text-xl leading-tight font-semibold tabular-nums">
+				{formatCents(product.price)}
+			</span>
+			<ItemDescription className="self-start">{product.code}</ItemDescription>
+			<div className="self-start justify-self-end">
 				{quantity === 0 ? (
 					<Button
 						ref={addButton}
 						variant="outline"
-						className="max-sm:flex-1"
 						disabled={!basketId}
 						onClick={onAdd}
 					>
@@ -149,7 +144,7 @@ function ProductRow({
 						</Button>
 					</ButtonGroup>
 				)}
-			</ItemActions>
+			</div>
 		</Item>
 	);
 }

@@ -8,7 +8,7 @@ Component names follow [ui.shadcn.com](https://ui.shadcn.com/docs/components) (c
 
 - **Who and what for.** A customer buying widgets, and an evaluator reading the code. The page's job: add widgets and see exactly why the total is what it is.
 - **The one memorable thing: the receipt.** The basket summary lays the math out the same way BR-07 does (subtotal, minus offer, plus delivery, equals total), with every amount right-aligned in tabular figures. When delivery can get cheaper, one line says how much more to spend. That line comes from the brief's own words: delivery costs are reduced "to incentivise customers to spend more".
-- **Products read like a parts catalogue.** The code (`R01`) is the large text and the name sits under it, because codes are how the brief, the API and the basket refer to products.
+- **Products lead with their name.** Customers shop by name, so the name is the large text. The code (`R01`) sits under it, small and muted, as a reference.
 - **Colour comes from the products only.** Red, green and blue are the widgets. They appear as swatches and nowhere else. The interface itself is ink on cool grey.
 - **Everything else stays quiet.** No hero, no marketing copy, no decorative motion. The only animation is the Spinner while a request is running.
 
@@ -46,7 +46,7 @@ Light theme only. _(shortcut: no dark mode, add the `.dark` token set if asked)_
 
 - One family: **IBM Plex Sans** (Google Fonts), weights 400, 500, 600. Industrial and plain, fits a widget maker, and has tabular figures.
 - All money uses `font-variant-numeric: tabular-nums` so amounts line up in the receipt.
-- Scale: 14 / 16 / 20 / 28 / 40 px. Body 16. Product code 28 semibold. Basket total 40 semibold.
+- Scale: 14 / 16 / 20 / 40 px. Body 16. Product name and price 20 semibold, code 14 muted. Basket total 40 semibold.
 - Sentence case everywhere. No all-caps labels.
 
 ### Layout
@@ -105,7 +105,7 @@ Basket: R01, R01. Shows BR-04, BR-05, BR-06, BR-07.
 | +-------------------------------------+
 ```
 
-- Product row: `ItemMedia` is a square swatch in the widget colour. `ItemTitle` is the code, `ItemDescription` the name. `ItemActions` holds the price (top right) and the Button.
+- Product row: a two-row grid inside `Item`, like a receipt line. Row 1: name (`ItemTitle`) and price, sharing a baseline. Row 2: code (`ItemDescription`, small, muted) and the Button or quantity controls. The swatch spans both rows (56px, 48px on mobile). Spacing: 16px swatch to text (12px on mobile), 6px between rows, 20px side padding (16px on mobile).
 - Offers sit above the catalogue, one `Item` (variant `highlight`, light blue) per offer with its description (from `GET /offers`). Product names in the text take their widget colour, mixed with 30% ink so each stays above 4.5:1 contrast. An offer can span several products (e.g. "one red, one green and one blue"), so it isn't a badge on one product.
 - With 0 in the basket the row shows "Add to basket". From 1 up it shows the quantity between a minus and a plus Button (`ButtonGroup`). Minus at 1 takes the product out and the row goes back to "Add to basket" (BR-10).
 - When the controls swap (0 → 1 or 1 → 0), focus moves to the new control, so keyboard users keep their place.
@@ -220,24 +220,23 @@ The request fails (network or 5xx).
 | Widgets                      |
 | (%) Buy one Red Widget, get   |
 |     the second half price.   |
-| [##] R01                     |
-|      Red Widget              |
-| $32.95            [-] 2 [+]  |
+| [##] R01             $32.95  |
+|      Red Widget  [-] 2 [+]   |
 | ---------------------------- |
-| [##] G01                     |
-|      Green Widget            |
-| $24.95 [Add to basket      ] |
+| [##] G01             $24.95  |
+|      Green   [Add to basket] |
+|      Widget                  |
 | ---------------------------- |
-| [##] B01                     |
-|      Blue Widget             |
-| $7.95  [Add to basket      ] |
+| [##] B01              $7.95  |
+|      Blue    [Add to basket] |
+|      Widget                  |
 +------------------------------+
 | Basket       [Empty basket]  |
 | ...same receipt as S1...     |
 +------------------------------+
 ```
 
-Price and controls move to their own row under the name. "Add to basket" fills the rest of the row, so the touch target is large.
+Same grid as desktop with a smaller swatch and gaps. On very narrow screens (320px) the product name wraps to two lines and the price stays on its first line.
 
 ## Data the screens need (API contract)
 
