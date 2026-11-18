@@ -38,3 +38,14 @@ export type BasketView = {
 	/** How much more to spend for the next cheaper delivery tier. Null when delivery is already free. */
 	nextDelivery: { spend: Cents; cost: Cents } | null;
 };
+
+export { acmeConfig } from "./acme.js";
+export {
+	Basket,
+	type BasketConfig,
+	type DeliveryTier,
+	type Offer,
+	type Product,
+	UnknownProductError,
+} from "./basket.js";
+export { secondHalfPrice } from "./offers.js";

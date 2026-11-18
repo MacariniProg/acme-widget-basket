@@ -31,7 +31,7 @@ pnpm lint && pnpm typecheck && pnpm test
 ## Project structure
 
 ```
-packages/core   API contract types (basket logic arrives in Stage 5), no dependencies
+packages/core   the Basket (business rules) and the API contract types, no dependencies
 apps/web        React UI (Vite, Tailwind, shadcn/ui)
 apps/api        NestJS API (Stage 5, not created yet)
 docs/           business rules, screens
