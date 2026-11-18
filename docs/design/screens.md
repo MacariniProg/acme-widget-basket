@@ -57,27 +57,28 @@ Light theme only. _(shortcut: no dark mode, add the `.dark` token set if asked)_
 
 ## Components
 
-| Where                   | shadcn component                                                             |
-| ----------------------- | ---------------------------------------------------------------------------- |
-| Product list            | `ItemGroup`, `Item` (outline), `ItemSeparator`                               |
-| Product parts           | `ItemMedia`, `ItemContent`, `ItemTitle`, `ItemDescription`, `ItemActions`    |
-| Offer and quantity tags | `Badge` (secondary)                                                          |
-| Add button              | `Button` (outline) + `Spinner`                                               |
-| Basket                  | `Card`, `CardHeader`, `CardTitle`, `CardAction`, `CardContent`, `CardFooter` |
-| Empty basket button     | `Button` (ghost, sm)                                                         |
-| Receipt lines           | `Separator`                                                                  |
-| Empty state             | `Empty`, `EmptyHeader`, `EmptyTitle`, `EmptyDescription`                     |
-| Loading                 | `Skeleton`                                                                   |
-| Load error              | `Alert` (destructive), `AlertTitle`, `AlertDescription`                      |
-| Add error               | `Sonner` (`Toaster` from `@/components/ui/sonner`, `toast.error`)            |
+| Where                      | shadcn component                                                                           |
+| -------------------------- | ------------------------------------------------------------------------------------------ |
+| Product list               | `ItemGroup`, `Item` (outline, `role="listitem"`)                                           |
+| Product parts              | `ItemMedia`, `ItemContent`, `ItemTitle`, `ItemDescription`, `ItemActions`                  |
+| Offers above the catalogue | `ItemGroup`, `Item` (highlight, a variant added to the generated file), `ItemMedia` (icon) |
+| Quantity controls          | `ButtonGroup`, `ButtonGroupText`, `Button` (outline, icon)                                 |
+| Add button                 | `Button` (outline) + `Spinner`                                                             |
+| Basket                     | `Card`, `CardHeader`, `CardTitle`, `CardAction`, `CardContent`, `CardFooter`               |
+| Empty basket button        | `Button` (destructive, sm)                                                                 |
+| Receipt lines              | `Separator`                                                                                |
+| Empty state                | `Empty`, `EmptyHeader`, `EmptyTitle`, `EmptyDescription`                                   |
+| Loading                    | `Skeleton`                                                                                 |
+| Load error                 | `Alert` (destructive), `AlertTitle`, `AlertDescription`                                    |
+| Add error                  | `Sonner` (`Toaster` from `@/components/ui/sonner`, `toast.error`)                          |
 
-Install: `pnpm dlx shadcn@latest add item badge button spinner card separator empty skeleton alert sonner`
+Install: `pnpm dlx shadcn@latest add item button button-group spinner card separator empty skeleton alert sonner`
 
 The shadcn `Toast` component only exists for Base UI projects. This project uses Radix, so errors use `Sonner`. Render it as `<Toaster theme="light" />`: the generated wrapper reads the theme from `next-themes`, and without a provider it would follow the OS dark mode.
 
 ## States
 
-Wireframe legend: `[Text]` is a Button, `(Text)` a Badge, `[##]` a colour swatch.
+Wireframe legend: `[Text]` is a Button, `[-] 2 [+]` the quantity controls, `[##]` a colour swatch, `(%)` the offer icon.
 
 ### S1. Basket with an offer (main state)
 
@@ -88,28 +89,31 @@ Basket: R01, R01. Shows BR-04, BR-05, BR-06, BR-07.
 | Acme Widget Co                                                         |
 +------------------------------------------------------------------------+
 | Widgets                                 | Basket          [Empty basket]|
-|                                         |                               |
-| +-------------------------------------+ | 2 x Red Widget         $65.90 |
-| | [##]  R01          $32.95           | | ----------------------------- |
-| | red   Red Widget                    | | Subtotal               $65.90 |
-| |       (Second one half price)       | | Red Widget offer      -$16.48 |
-| |       (2 in basket) [Add to basket] | | Delivery                $4.95 |
-| +-------------------------------------+ | ----------------------------- |
-| | [##]  G01          $24.95           | | Total                         |
-| | green Green Widget  [Add to basket] | |                       $54.37  |
 | +-------------------------------------+ |                               |
-| | [##]  B01           $7.95           | | Spend $0.58 more to pay $2.95 |
-| | blue  Blue Widget   [Add to basket] | | for delivery.                 |
-| +-------------------------------------+ +-------------------------------+
+| | (%) Buy one Red Widget, get the     | | 2 x Red Widget         $65.90 |
+| |     second half price.              | | ----------------------------- |
+| +-------------------------------------+ | Subtotal               $65.90 |
+| +-------------------------------------+ | Red Widget offer      -$16.48 |
+| | [##]  R01                   $32.95  | | Delivery                $4.95 |
+| | red   Red Widget        [-] 2 [+]   | | ----------------------------- |
+| +-------------------------------------+ | Total                 $54.37  |
+| | [##]  G01                   $24.95  | |                               |
+| | green Green Widget  [Add to basket] | | Spend $0.58 more to pay $2.95 |
+| +-------------------------------------+ | for delivery.                 |
+| | [##]  B01                    $7.95  | +-------------------------------+
+| | blue  Blue Widget   [Add to basket] |
+| +-------------------------------------+
 ```
 
-- Product row: `ItemMedia` is a square swatch in the widget colour. `ItemTitle` is the code with the price right-aligned on the same line, `ItemDescription` the name. The Button sits in `ItemActions`.
-- `Badge` "Second one half price" on products that have an offer (BR-04).
-- `Badge` "2 in basket" once the product is in the basket, so adding gives feedback next to the button that was pressed.
+- Product row: `ItemMedia` is a square swatch in the widget colour. `ItemTitle` is the code, `ItemDescription` the name. `ItemActions` holds the price (top right) and the Button.
+- Offers sit above the catalogue, one `Item` (variant `highlight`, light blue) per offer with its description (from `GET /offers`). Product names in the text take their widget colour, mixed with 30% ink so each stays above 4.5:1 contrast. An offer can span several products (e.g. "one red, one green and one blue"), so it isn't a badge on one product.
+- With 0 in the basket the row shows "Add to basket". From 1 up it shows the quantity between a minus and a plus Button (`ButtonGroup`). Minus at 1 takes the product out and the row goes back to "Add to basket" (BR-10).
+- When the controls swap (0 → 1 or 1 → 0), focus moves to the new control, so keyboard users keep their place.
+- "Empty basket" is a destructive (red) Button.
 - Receipt: one line per product with quantity and line amount at catalogue price, then subtotal, one line per entry in `discounts` with its label, delivery, total (BR-07).
 - Delivery hint in `CardFooter`, `text-muted-foreground`. Only when a cheaper tier exists (BR-06). Next tier with a cost: "Spend $0.58 more to pay $2.95 for delivery." Next tier free: "Spend $32.10 more for free delivery."
 - The total area has `aria-live="polite"`, so screen readers hear the new total after each add.
-- Each Button has a visible label "Add to basket" and `aria-label="Add Red Widget to basket"`.
+- "Add to basket" carries the product name as screen-reader-only text, so its accessible name is "Add to basket: Red Widget" and still starts with the visible label. The icon Buttons are named "Add one Red Widget" and "Remove one Red Widget".
 
 ### S2. Basket without an offer
 
@@ -179,17 +183,14 @@ First load, before products and basket arrive.
 
 `Skeleton` with the same height as each real row, so the page doesn't jump when data arrives.
 
-### S6. Adding
+### S6. Adding or removing
 
-While `POST /baskets/:id/items` runs.
+While `POST /baskets/:id/items` or `DELETE /baskets/:id/items/:code` runs.
 
-```
-| | [##]  R01          $32.95           |
-| | red   Red Widget  [(o) Adding...  ] |
-```
-
-- Only the pressed Button is disabled and shows `<Spinner data-icon="inline-start" />` "Adding". The other products stay clickable.
-- The receipt keeps the old numbers until the response arrives. No optimistic update, because the total comes from the server.
+- Optimistic, with no Spinner and no disabled Buttons: the quantity changes on click (saved quantity + requests in flight).
+- The receipt keeps the server's numbers and changes once, when the response arrives. The front-end never computes offers or delivery, so it never shows a half-updated total.
+- Adds and removes run one at a time, in click order, so a slow response can't overwrite a newer basket. "Empty basket" waits in the same queue.
+- If a request fails, its unit drops out of the count (the number rolls back) and S7 shows the toast.
 
 ### S7. Add failed
 
@@ -217,34 +218,36 @@ The request fails (network or 5xx).
 | Acme Widget Co               |
 +------------------------------+
 | Widgets                      |
-| [##] R01             $32.95  |
+| (%) Buy one Red Widget, get   |
+|     the second half price.   |
+| [##] R01                     |
 |      Red Widget              |
-|      (Second one half price) |
-|      [Add to basket]         |
+| $32.95            [-] 2 [+]  |
 | ---------------------------- |
-| [##] G01             $24.95  |
+| [##] G01                     |
 |      Green Widget            |
-|      [Add to basket]         |
+| $24.95 [Add to basket      ] |
 | ---------------------------- |
-| [##] B01              $7.95  |
+| [##] B01                     |
 |      Blue Widget             |
-|      [Add to basket]         |
+| $7.95  [Add to basket      ] |
 +------------------------------+
 | Basket       [Empty basket]  |
 | ...same receipt as S1...     |
 +------------------------------+
 ```
 
-The Button moves under the name and takes the full row width, so the touch target is large.
+Price and controls move to their own row under the name. "Add to basket" fills the rest of the row, so the touch target is large.
 
 ## Data the screens need (API contract)
 
 All amounts are integer cents (BR-02). The UI formats them with `Intl.NumberFormat("en-US", { style: "currency", currency: "USD" })`.
 
-The types live in `packages/core/src/index.ts` (`ProductView`, `BasketView`, `DiscountView`). In short:
+The types live in `packages/core/src/index.ts` (`ProductView`, `OfferView`, `BasketView`, `DiscountView`). In short:
 
 ```ts
-type ProductView = { code; name; price; offer: string | null }; // offer = badge text (S1)
+type ProductView = { code; name; price };
+type OfferView = { label; description }; // shown above the catalogue (S1)
 type BasketView = {
 	id; // uuid, saved in localStorage
 	items: { code; name; quantity; lineTotal }[];
@@ -259,14 +262,16 @@ type BasketView = {
 | Screen need                | Endpoint                                             |
 | -------------------------- | ---------------------------------------------------- |
 | Catalogue (S1, S5)         | `GET /products` → `ProductView[]`                    |
+| Offers (S1)                | `GET /offers` → `OfferView[]`                        |
 | New or emptied basket (S4) | `POST /baskets` → `BasketView`                       |
 | Saved basket on reload     | `GET /baskets/:id` → `BasketView` (404 → new basket) |
 | Add (S6, S7)               | `POST /baskets/:id/items` `{ code }` → `BasketView`  |
+| Remove one (S6)            | `DELETE /baskets/:id/items/:code` → `BasketView`     |
 
 ### Discounts and offers come from the API
 
 - The client only sends a product code. Prices, discounts, delivery and totals are computed on the server and are never read from the request, so a client can't send its own price or discount.
-- Offers are data (an `offers` table, see the plan), and the badge text comes from `ProductView.offer`. Changing or switching off an offer of an existing kind is a data change, with no front-end change.
+- Offers are data (an `offers` table, see the plan), and their text comes from `GET /offers`. Changing or switching off an offer of an existing kind is a data change, with no front-end change.
 - A new kind of offer (e.g. "3 for 2") is still a new function in `packages/core`. The front-end doesn't change.
 - Admin screens to manage offers are out of scope.
 - Each applied offer is its own entry in `discounts`, with the label the receipt shows. Several offers at once need no front-end change. _(decided in Stage 3)_

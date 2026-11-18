@@ -2,6 +2,7 @@ import {
 	acmeConfig,
 	Basket,
 	type BasketView,
+	offerViews,
 	productViews,
 	UnknownProductError,
 } from "@acme/core";
@@ -13,10 +14,14 @@ import { apiBaseUrl } from "@/lib/api";
 // shortcut: baskets live in memory and vanish on reload; the real API (Stage 5) keeps them in Postgres.
 const baskets = new Map<string, string[]>();
 
-function view(id: string, codes: string[]): BasketView {
+function load(codes: string[]) {
 	const basket = new Basket(acmeConfig);
 	for (const code of codes) basket.add(code);
-	return { id, ...basket.summary() };
+	return basket;
+}
+
+function view(id: string, codes: string[]): BasketView {
+	return { id, ...load(codes).summary() };
 }
 
 const notFound = () =>
@@ -25,6 +30,10 @@ const notFound = () =>
 export const handlers = [
 	http.get(`${apiBaseUrl}/products`, () =>
 		HttpResponse.json(productViews(acmeConfig)),
+	),
+
+	http.get(`${apiBaseUrl}/offers`, () =>
+		HttpResponse.json(offerViews(acmeConfig)),
 	),
 
 	http.post(`${apiBaseUrl}/baskets`, () => {
@@ -57,6 +66,26 @@ export const handlers = [
 				const result = view(params.id, updated); // throws on an unknown code before saving it
 				baskets.set(params.id, updated);
 				return HttpResponse.json(result);
+			} catch (error) {
+				if (error instanceof UnknownProductError) {
+					return HttpResponse.json({ message: error.message }, { status: 400 });
+				}
+				throw error;
+			}
+		},
+	),
+
+	http.delete<{ id: string; code: string }>(
+		`${apiBaseUrl}/baskets/:id/items/:code`,
+		({ params }) => {
+			const codes = baskets.get(params.id);
+			if (!codes) return notFound();
+			try {
+				const basket = load(codes);
+				basket.remove(params.code); // throws on an unknown code
+				const index = codes.lastIndexOf(params.code);
+				if (index !== -1) codes.splice(index, 1);
+				return HttpResponse.json(view(params.id, codes));
 			} catch (error) {
 				if (error instanceof UnknownProductError) {
 					return HttpResponse.json({ message: error.message }, { status: 400 });

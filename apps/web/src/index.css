@@ -15,6 +15,8 @@
 	--text-code--line-height: 1.2;
 	--text-total: 2.5rem;
 	--text-total--line-height: 1.1;
+	--color-highlight: var(--highlight);
+	--color-highlight-border: var(--highlight-border);
 	--color-ring: var(--ring);
 	--color-input: var(--input);
 	--color-border: var(--border);
@@ -62,6 +64,10 @@
 	--input: #d5dae1;
 	--ring: #2d6cd3;
 	--radius: 0.5rem;
+
+	/* Offers (Item variant "highlight"). Every widget name colour stays above 4.5:1 on it. */
+	--highlight: #e8f0fc;
+	--highlight-border: #c3d6f4;
 
 	/* Product swatches only, picked by product code: var(--widget-<code>, var(--muted)). */
 	--widget-r01: #d63a3a;

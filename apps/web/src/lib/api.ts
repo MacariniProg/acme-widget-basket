@@ -1,4 +1,4 @@
-import type { BasketView, ProductView } from "@acme/core";
+import type { BasketView, OfferView, ProductView } from "@acme/core";
 
 // Without VITE_API_URL the app talks to /api, which the MSW mock answers in development.
 export const apiBaseUrl = import.meta.env.VITE_API_URL ?? "/api";
@@ -32,9 +32,15 @@ const json = (body: unknown): RequestInit => ({
 
 export const api = {
 	products: () => request<ProductView[]>("/products"),
+	offers: () => request<OfferView[]>("/offers"),
 	createBasket: () => request<BasketView>("/baskets", { method: "POST" }),
 	basket: (id: string) => request<BasketView>(`/baskets/${id}`),
 	// The client only sends the product code. Prices and totals come back from the server.
 	addItem: (basketId: string, code: string) =>
 		request<BasketView>(`/baskets/${basketId}/items`, json({ code })),
+	removeItem: (basketId: string, code: string) =>
+		request<BasketView>(
+			`/baskets/${basketId}/items/${encodeURIComponent(code)}`,
+			{ method: "DELETE" },
+		),
 };
