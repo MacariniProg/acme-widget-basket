@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./src",
+		// The build reads @acme/core from its compiled dist/, so core's source stays out of this program.
+		"customConditions": []
+	},
+	"include": ["src"],
+	"exclude": ["**/*.spec.ts"]
+}

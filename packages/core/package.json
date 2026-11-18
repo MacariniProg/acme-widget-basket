@@ -3,9 +3,13 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		".": "./src/index.ts"
+		".": {
+			"@acme/source": "./src/index.ts",
+			"default": "./dist/index.js"
+		}
 	},
 	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
 		"typecheck": "tsc"
 	}
 }

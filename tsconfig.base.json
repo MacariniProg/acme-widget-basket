@@ -8,6 +8,8 @@
 		"verbatimModuleSyntax": true,
 		"isolatedModules": true,
 		"skipLibCheck": true,
+		// Type-check and test against @acme/core's source. Node, running built code, gets its dist/ (see packages/core/package.json).
+		"customConditions": ["@acme/source"],
 		"noEmit": true
 	}
 }

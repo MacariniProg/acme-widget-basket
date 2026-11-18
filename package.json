@@ -7,6 +7,9 @@
 	},
 	"scripts": {
 		"dev": "pnpm --filter web dev",
+		"dev:api": "pnpm --filter api dev",
+		"db:up": "docker compose up -d --wait db",
+		"db:migrate": "pnpm --filter api db:migrate",
 		"build": "pnpm -r build",
 		"lint": "biome check .",
 		"format": "biome check --write .",

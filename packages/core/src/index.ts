@@ -1,5 +1,4 @@
 // API contract shared by apps/api and apps/web. See docs/design/screens.md.
-// shortcut: the package exports TypeScript source (fine for Vite and Vitest); the API build in Stage 5 must compile or bundle it.
 
 /** Integer cents, never floats (BR-02). */
 export type Cents = number;

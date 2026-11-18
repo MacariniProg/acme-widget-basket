@@ -1,0 +1,13 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"outDir": "./dist",
+		"sourceMap": true,
+		"types": ["node"],
+		// Nest reads constructor types from decorator metadata to inject dependencies.
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+	},
+	"include": ["src", "test", "vitest.config.ts"]
+}
