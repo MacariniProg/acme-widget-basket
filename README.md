@@ -21,6 +21,8 @@ pnpm lint && pnpm typecheck && pnpm test
 
 | Command          | What it does                     |
 | ---------------- | -------------------------------- |
+| `pnpm dev`       | Starts the web app (Vite)        |
+| `pnpm build`     | Builds every package             |
 | `pnpm lint`      | Biome lint and format check      |
 | `pnpm format`    | Biome fixes and formats in place |
 | `pnpm typecheck` | `tsc` in every package           |
@@ -30,7 +32,7 @@ pnpm lint && pnpm typecheck && pnpm test
 
 ```
 packages/core   API contract types (basket logic arrives in Stage 5), no dependencies
-apps/web        React UI (Stage 4, not created yet)
+apps/web        React UI (Vite, Tailwind, shadcn/ui)
 apps/api        NestJS API (Stage 5, not created yet)
 docs/           business rules, screens
 ```
