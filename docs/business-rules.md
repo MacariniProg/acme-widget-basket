@@ -3,8 +3,6 @@
 The rules the basket follows. Each rule has an id (`BR-NN`) so tests, screens and specs can point to it.
 Every rule says where it comes from: **brief** (the coding test) or **assumption** (a decision made here because the brief is silent or ambiguous).
 
-Status: draft, waiting for review.
-
 ## Glossary
 
 - **Basket**: the list of products a customer has added.

@@ -10,7 +10,7 @@ Back-end in Node/TypeScript (NestJS), a small UI in React/TypeScript.
 
 ## Current state
 
-No code yet. Current stage: **Stage 1, business rules doc** (`docs/business-rules.md`).
+No code yet. Current stage: **Stage 2, screens doc** (`docs/design/screens.md`). Business rules are done: `docs/business-rules.md`.
 The stage roadmap is in `docs/planning/roteiro-etapas.md`. Update this line when a stage closes.
 
 Planned layout (created in Stage 3, does not exist yet):
@@ -21,6 +21,8 @@ Planned layout (created in Stage 3, does not exist yet):
 - `docs/`: business rules, screens, architecture, decisions
 
 ## Rules that never change
+
+Full list with ids and sources: `docs/business-rules.md`. The ones agents get wrong most:
 
 - Money is integer cents (`number`), never floats. Format only at the edges (UI, API response).
 - The red widget discount is rounded up (half a cent goes to the customer): $32.95 / 2 = 1648 cents.
