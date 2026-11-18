@@ -10,7 +10,7 @@ Back-end in Node/TypeScript (NestJS), a small UI in React/TypeScript.
 
 ## Current state
 
-No code yet. Current stage: **Stage 2, screens doc** (`docs/design/screens.md`). Business rules are done: `docs/business-rules.md`.
+No code yet. Current stage: **Stage 3, project structure**. Done: business rules (`docs/business-rules.md`) and screens (`docs/design/screens.md`).
 The stage roadmap is in `docs/planning/roteiro-etapas.md`. Update this line when a stage closes.
 
 Planned layout (created in Stage 3, does not exist yet):
@@ -30,6 +30,7 @@ Full list with ids and sources: `docs/business-rules.md`. The ones agents get wr
 - The four example baskets from the brief must always pass:
   B01,G01 = $37.85 · R01,R01 = $54.37 · R01,G01 = $60.85 · B01,B01,R01,R01,R01 = $98.27
 - An unknown product code is an error, never silently ignored.
+- The client only sends product codes. Prices, discounts, delivery and totals are computed on the server, never read from a request.
 - Everything committed (code, docs, commits, README) is in English.
 
 ## Docs
