@@ -273,7 +273,7 @@ type BasketView = {
 - Offers are data (an `offers` table, see the plan), and their text comes from `GET /offers`. Changing or switching off an offer of an existing kind is a data change, with no front-end change.
 - A new kind of offer (e.g. "3 for 2") is still a new function in `packages/core`. The front-end doesn't change.
 - Admin screens to manage offers are out of scope.
-- Each applied offer is its own entry in `discounts`, with the label the receipt shows. Several offers at once need no front-end change. _(decided in Stage 3)_
+- Each applied offer is its own entry in `discounts`, with the label the receipt shows. Several offers at once need no front-end change.
 
 ### Delivery hint
 

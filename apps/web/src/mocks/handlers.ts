@@ -11,7 +11,7 @@ import { apiBaseUrl } from "@/lib/api";
 
 // A fake API for development and tests, answering the contract in docs/design/screens.md.
 // It runs the real Basket from @acme/core, so every total is correct.
-// shortcut: baskets live in memory and vanish on reload; the real API (Stage 5) keeps them in Postgres.
+// shortcut: baskets live in memory and vanish on reload; the real API keeps them in Postgres.
 const baskets = new Map<string, string[]>();
 
 function load(codes: string[]) {
