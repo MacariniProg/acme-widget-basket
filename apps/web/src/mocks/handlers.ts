@@ -82,7 +82,7 @@ export const handlers = [
 			if (!codes) return notFound();
 			try {
 				const basket = load(codes);
-				basket.remove(params.code); // throws on an unknown code
+				basket.remove(params.code);
 				const index = codes.lastIndexOf(params.code);
 				if (index !== -1) codes.splice(index, 1);
 				return HttpResponse.json(view(params.id, codes));
@@ -96,5 +96,4 @@ export const handlers = [
 	),
 ];
 
-/** Test helper: forget every basket between tests. */
 export const resetMockBaskets = () => baskets.clear();

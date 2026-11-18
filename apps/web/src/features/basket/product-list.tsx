@@ -89,7 +89,6 @@ function ProductRow({
 	}
 
 	return (
-		// Two rows on a grid, like a receipt line: name and price share the first row, code and controls the second.
 		<Item
 			variant="outline"
 			role="listitem"

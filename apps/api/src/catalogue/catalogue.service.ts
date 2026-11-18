@@ -6,7 +6,6 @@ import { type Db, deliveryTiers, offers, products } from "../db/schema.js";
 
 type OfferRow = typeof offers.$inferSelect;
 
-/** Each offer kind in the database maps to the core function that computes it. */
 function toOffer({ kind, productCode, label, description }: OfferRow): Offer {
 	switch (kind) {
 		case "second_half_price":
@@ -21,7 +20,6 @@ function toOffer({ kind, productCode, label, description }: OfferRow): Offer {
 export class CatalogueService {
 	constructor(@InjectDrizzle() private readonly db: Db) {}
 
-	/** Catalogue, delivery tiers and active offers, as the Basket constructor takes them. */
 	// shortcut: three small queries per request; cache in memory with a TTL if it ever shows up in latency.
 	async config(): Promise<BasketConfig> {
 		const [catalogue, tiers, offerRows] = await Promise.all([

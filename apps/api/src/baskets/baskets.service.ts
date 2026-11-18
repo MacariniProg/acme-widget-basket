@@ -21,7 +21,6 @@ export class BasketsService {
 		return this.view(basket!.id);
 	}
 
-	/** Prices, discounts and delivery are always recomputed from the database, never stored or read from a request. */
 	async view(id: string): Promise<BasketView> {
 		return { id, ...(await this.load(id)).summary() };
 	}
@@ -37,7 +36,7 @@ export class BasketsService {
 
 	async remove(id: string, code: string): Promise<BasketView> {
 		const basket = await this.load(id);
-		basket.remove(code); // throws on an unknown code; a code not in the basket changes nothing (BR-10)
+		basket.remove(code);
 		// Postgres has no DELETE ... LIMIT, so pick the last row added for that product first.
 		const last = this.db
 			.select({ id: basketItems.id })
@@ -51,7 +50,6 @@ export class BasketsService {
 		return { id, ...basket.summary() };
 	}
 
-	/** The saved basket as a core Basket, built with the catalogue, delivery tiers and offers from the database. */
 	private async load(id: string): Promise<Basket> {
 		const [found, items, config] = await Promise.all([
 			this.db

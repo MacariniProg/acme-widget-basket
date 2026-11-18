@@ -1,7 +1,6 @@
 import type { BasketConfig } from "./basket.js";
 import type { OfferView, ProductView } from "./index.js";
 
-/** The catalogue as GET /products returns it. */
 export function productViews({ catalogue }: BasketConfig): ProductView[] {
 	return catalogue.map(({ code, name, price }) => ({ code, name, price }));
 }

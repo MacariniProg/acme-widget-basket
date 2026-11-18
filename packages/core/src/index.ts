@@ -10,9 +10,7 @@ export type ProductView = {
 };
 
 export type OfferView = {
-	/** Same text as the receipt line when the offer applies, e.g. "Red Widget offer". */
 	label: string;
-	/** e.g. "Buy one Red Widget, get the second half price." */
 	description: string;
 };
 
@@ -25,7 +23,6 @@ export type BasketItemView = {
 };
 
 export type DiscountView = {
-	/** Receipt line text, e.g. "Red Widget offer". */
 	label: string;
 	amount: Cents;
 };
@@ -34,7 +31,6 @@ export type BasketView = {
 	id: string;
 	items: BasketItemView[];
 	subtotal: Cents;
-	/** One line per applied offer. Empty when no offer applies. */
 	discounts: DiscountView[];
 	/** 0 means free delivery. */
 	delivery: Cents;
