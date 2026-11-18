@@ -1,7 +1,7 @@
 import type { BasketView, ProductView } from "@acme/core";
 
 // Without VITE_API_URL the app talks to /api, which the MSW mock answers in development.
-const baseUrl = import.meta.env.VITE_API_URL ?? "/api";
+export const apiBaseUrl = import.meta.env.VITE_API_URL ?? "/api";
 
 export class ApiError extends Error {
 	readonly status: number;
@@ -14,7 +14,7 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
-	const response = await fetch(`${baseUrl}${path}`, init);
+	const response = await fetch(`${apiBaseUrl}${path}`, init);
 	if (!response.ok) {
 		throw new ApiError(
 			response.status,

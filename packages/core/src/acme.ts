@@ -17,5 +17,11 @@ export const acmeConfig: BasketConfig = {
 		{ below: 9000, cost: 295 },
 		{ cost: 0 },
 	],
-	offers: [secondHalfPrice(red.code, "Red Widget offer")],
+	offers: [
+		secondHalfPrice({
+			code: red.code,
+			label: "Red Widget offer",
+			badge: "Second one half price",
+		}),
+	],
 };

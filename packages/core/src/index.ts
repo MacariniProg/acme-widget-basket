@@ -49,3 +49,4 @@ export {
 	UnknownProductError,
 } from "./basket.js";
 export { secondHalfPrice } from "./offers.js";
+export { productViews } from "./products.js";

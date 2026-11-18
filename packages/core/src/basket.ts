@@ -8,6 +8,8 @@ export type DeliveryTier = { below?: Cents; cost: Cents };
 export type Offer = {
 	/** Receipt line text, e.g. "Red Widget offer". */
 	label: string;
+	/** Product tag in the catalogue, e.g. "Second one half price" on R01. */
+	badge?: { code: string; text: string };
 	discount: (items: readonly Product[]) => Cents;
 };
 

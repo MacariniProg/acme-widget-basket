@@ -1,9 +1,18 @@
 import type { Offer } from "./basket.js";
 
 /** Buy one, get the second half price, once per pair (BR-04). */
-export function secondHalfPrice(code: string, label: string): Offer {
+export function secondHalfPrice({
+	code,
+	label,
+	badge,
+}: {
+	code: string;
+	label: string;
+	badge: string;
+}): Offer {
 	return {
 		label,
+		badge: { code, text: badge },
 		discount: (items) => {
 			const matches = items.filter((item) => item.code === code);
 			const pairs = Math.floor(matches.length / 2);
